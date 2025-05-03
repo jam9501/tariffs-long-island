@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <meta charset="UTF-8" />
   <title>Tariff Tooltip Map</title>
   <style>
@@ -269,46 +270,50 @@
       "Carle_Place": `Carle Place`,
       "Freeport": `Freeport`
     };
-
-   
-    document.querySelectorAll('ellipse[data-name]').forEach(el => {
-      const town = el.getAttribute('data-name');
-      
-      el.addEventListener('mouseover', () => {
-        tooltip.innerHTML = tooltipData[town];
-        tooltip.style.display = 'block';
-        
-        
-        el.classList.add('stroked');
-      });
-
      
-      el.addEventListener('mousemove', (e) => {
-        tooltip.style.left = (e.pageX + 10) + 'px';
-        tooltip.style.top = (e.pageY + 10) + 'px';
-      });
+    $(document).ready(function () {
+      const tooltipData = {
+        "Oyster_Bay": `Oyster Bay has over 25 Chinese restaurants within a 10-mile radius, according to a Herald analysis. While many restaurants source meat and produce locally, owners often import specialty items—such as Sichuan peppercorns from China.<br><strong>Tariff Impact:</strong> <em>145% on China</em>`,
+        "Hicksville": `Hicksville is home to 48 construction companies, ranging from custom house builders to roofers. Some business owners were concerned by previous 25% tariffs on Canada and Mexico, but President Trump exempted the countries under the U.S.-Mexico-Canada Agreement.<br><strong>Tariff Impact:</strong> <em>0% on Canada and Mexico</em>`,
+        "Elmont": `In Elmont, an employee at Harry's Auto Repair said auto parts have not increased in price, but wholesalers have warned that hikes may be coming.<br><strong>Tariff Impact:</strong> <em>Unknown</em>`,
+        "Freeport": `Both Freeport and Carle Place offer local computer and phone repairs. Businesses report a 20% increase in prices for products like batteries and accessories.<br><strong>Tariff Impact:</strong> <em>145% on China</em>`
+      };
+  
+      const $tooltip = $('#tooltip');
+  
 
-      
-      el.addEventListener('mouseout', () => {
-        tooltip.style.display = 'none';
-        
-        
-        el.classList.remove('stroked');
-      });
-    });
-
-    
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view'); 
-          observer.unobserve(entry.target); 
+      $('ellipse[data-name]').on({
+        mouseenter: function () {
+          const town = $(this).data('name');
+          $tooltip.html(tooltipData[town]);
+          $tooltip.show();
+          $(this).addClass('stroked');
+        },
+        mousemove: function (e) {
+          $tooltip.css({
+            left: e.pageX + 10,
+            top: e.pageY + 10
+          });
+        },
+        mouseleave: function () {
+          $tooltip.hide();
+          $(this).removeClass('stroked');
         }
       });
-    }, { threshold: 0.5 });
-   
-    document.querySelectorAll('.dot').forEach(dot => {
-      observer.observe(dot);
+  
+  
+      const showDotsInView = () => {
+        $('.dot').each(function () {
+          const rect = this.getBoundingClientRect();
+          const inView = rect.top < window.innerHeight * 0.75;
+          if (inView) {
+            $(this).addClass('in-view');
+          }
+        });
+      };
+
+      showDotsInView();
+      $(window).on('scroll', showDotsInView);
     });
   </script>
 </html>
