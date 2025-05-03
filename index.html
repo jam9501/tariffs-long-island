@@ -260,24 +260,17 @@
 </body>
   
   <script>
-    
-    const tooltip = document.getElementById('tooltip');
-    const tooltipData = {
+     
+    $(document).ready(function () {
+      const tooltipData = {
+        {
       "Oyster_Bay": `Oyster Bay`,
       "Lynbrook": `Lynbrook`,
       "Elmont": `Elmont`,
       "Cedarhurst": `Cedarhurst`,
       "Carle_Place": `Carle Place`,
       "Freeport": `Freeport`
-    };
-     
-    $(document).ready(function () {
-      const tooltipData = {
-        "Oyster_Bay": `Oyster Bay has over 25 Chinese restaurants within a 10-mile radius, according to a Herald analysis. While many restaurants source meat and produce locally, owners often import specialty items—such as Sichuan peppercorns from China.<br><strong>Tariff Impact:</strong> <em>145% on China</em>`,
-        "Hicksville": `Hicksville is home to 48 construction companies, ranging from custom house builders to roofers. Some business owners were concerned by previous 25% tariffs on Canada and Mexico, but President Trump exempted the countries under the U.S.-Mexico-Canada Agreement.<br><strong>Tariff Impact:</strong> <em>0% on Canada and Mexico</em>`,
-        "Elmont": `In Elmont, an employee at Harry's Auto Repair said auto parts have not increased in price, but wholesalers have warned that hikes may be coming.<br><strong>Tariff Impact:</strong> <em>Unknown</em>`,
-        "Freeport": `Both Freeport and Carle Place offer local computer and phone repairs. Businesses report a 20% increase in prices for products like batteries and accessories.<br><strong>Tariff Impact:</strong> <em>145% on China</em>`
-      };
+     };
   
       const $tooltip = $('#tooltip');
   
