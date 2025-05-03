@@ -260,17 +260,15 @@
 </body>
   
   <script>
-     
     $(document).ready(function () {
       const tooltipData = {
-        {
-      "Oyster_Bay": `Oyster Bay`,
-      "Lynbrook": `Lynbrook`,
-      "Elmont": `Elmont`,
-      "Cedarhurst": `Cedarhurst`,
-      "Carle_Place": `Carle Place`,
-      "Freeport": `Freeport`
-     };
+        "Oyster_Bay": `Oyster Bay`,
+        "Lynbrook": `Lynbrook`,
+        "Elmont": `Elmont`,
+        "Cedarhurst": `Cedarhurst`,
+        "Carle_Place": `Carle Place`,
+        "Freeport": `Freeport`
+      };
   
       const $tooltip = $('#tooltip');
   
@@ -278,14 +276,13 @@
       $('ellipse[data-name]').on({
         mouseenter: function () {
           const town = $(this).data('name');
-          $tooltip.html(tooltipData[town]);
-          $tooltip.show();
+          $tooltip.html(tooltipData[town]).show();
           $(this).addClass('stroked');
         },
         mousemove: function (e) {
           $tooltip.css({
-            left: e.pageX + 10,
-            top: e.pageY + 10
+            left: e.pageX + 10 + 'px',
+            top: e.pageY + 10 + 'px'
           });
         },
         mouseleave: function () {
@@ -294,19 +291,19 @@
         }
       });
   
-  
-      const showDotsInView = () => {
+      
+      const checkInView = function () {
         $('.dot').each(function () {
           const rect = this.getBoundingClientRect();
-          const inView = rect.top < window.innerHeight * 0.75;
-          if (inView) {
+          if (rect.top < window.innerHeight * 0.75) {
             $(this).addClass('in-view');
           }
         });
       };
-
-      showDotsInView();
-      $(window).on('scroll', showDotsInView);
+  
+     
+      checkInView();
+      $(window).on('scroll', checkInView);
     });
-  </script>
+  </script>  
 </html>
